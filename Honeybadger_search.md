@@ -32,13 +32,13 @@ Enter key:value tokens into the search box to refine results. Multiple tokens ma
 Tokens are separated by spaces and are denoted by green highlighting, or yellow highlighting if the query does not match a preset key:value token. 
 
 The default search tokens are `-is:resolved -is:ignored`, which will show all errors that are not resolved or ignored. 
-***Add picture***.
+
+![Image of default search box values](images/isresolved_isnotignored.png)
 
 ###Text search
 Search through your errors by **class** or error **message** by going to your project page and typing your search term into the search box. Text queries can also be combined with key:value tokens: 
 `john class:UserError -tag:wip -tag:pending component:UsersController action:update`.
 
-***Add picture***.
 ###Search box keyboard shortcuts
  Key      | Response  |
 | ------------- |:-------------:| 
@@ -52,9 +52,9 @@ Search through your errors by **class** or error **message** by going to your pr
 | typing | triggers autocomplete |
 
 ###Search palette 
-Use the search palette to refine your query. Query tokens are separated by spaces and are denoted by green highlighting, or yellow highlighting if the query is not ***Something something something***. 
+Use the search palette to refine your query. Query tokens are separated by spaces and are denoted by green highlighting, or yellow highlighting if the query is not a key:value token. 
 
-***add picture of search query with lots of tokens***
+![Image of search box and search palette](images/search_palette.png)
 
 ###Resolved, ignored, paused
 | Name       | Matches errors   | Example  |
@@ -67,12 +67,12 @@ Use the search palette to refine your query. Query tokens are separated by space
 | Not ignored | Not ignored  |`-is:ignored` |
 
 Example: 
-***Add picture resolved ignored paused***.
+![Image of resolved, ignored, and paused requests](images/resolved_ignored_paused.png).
 
 Generates errors that are paused, unresolved, and ignored. 
 
 ###Assigned to
-Errors can be assigned to team members, and results can be refined by assignment.
+Errors can be assigned to team members, and results can be refined by assignment. Tokens can be combined to search errors assigned to multiple team members. 
 
 | Name       | Matches errors   | Example  |
 | ------------- |:-------------:| -----:|
@@ -81,9 +81,9 @@ Errors can be assigned to team members, and results can be refined by assignment
 | Anybody | Assigned to anyone| `assignee:"anybody"` |
 | Other | Assigned to one team member |`assignee:""` |
 
-If other, choose a team member from the dropdown list or begin typing.
+If other, choose a team member from the dropdown list or begin typing to trigger autocomplete.
 
-***Add gif assignee options***.
+![Animation of assigned to menu](images/assignee_options.gif).
 
 ###Environment
 Search errors by your development environment:
@@ -91,13 +91,14 @@ Search errors by your development environment:
 | Name       | Matches errors   | Example  |
 | ------------- |:-------------:| -----:|
 | Production | In production | `environment:"production"`| 
+| Not production | Not in production | `-environment:"production"`|
 | Development| In development | `environment:"development"` |
-| Other | In another environment | `environment:"development"` |
+| Except development| Not in development | `-environment:"development"` |
+| Other | In another environment | `environment:"test"` |
 
+If other, choose an environment from the dropdown list or begin typing to trigger autocomplete.
 
-If other, choose an environment from the dropdown list or begin typing.
-
-***Add gif environment***.
+![Animation of assigned to menu](images/environment.gif).
 
 ###Last Occurred
 Search errors by their last occurrance. Last Occurred can also be combined with First Seen to create a date range. User's timezone is automatically determined but can be changed manually. 
@@ -113,7 +114,7 @@ Search errors by their last occurrance. Last Occurred can also be combined with 
 
 You can also enter human-friendly dates like `today`, `this week`, or `July 1`, for example: `occurred.after:"this week"`. 
 
-**Add gif last occurred**
+![Animation of last occurred query](images/last_occurred.gif)
 
 
 ###First Seen
