@@ -9,12 +9,12 @@ Honeybadger's search lets your team powerfully search errors to resolve quickly.
 
 Searches can be done through the search box or keyboard shortcuts when the search box is unselected. `Key:value` tokens may be combined to refine results, and may also be combined with a full-text query. 
 
-Key:value tokens can appear in the search box in any order. 
+`Key:value` tokens can appear in the search box in any order. 
 
 ## How combined tokens filter results
 Positive tokens use OR to match results. An example of a match is a  search for `class:Foo class:Bar `; the search results will include errors with class `Foo` OR `Bar`.
 
-Negative tokens (which begin with a minus sign: -) always use AND, so that `"-class:Foo -class:Bar"` will return results which are not class `Foo` AND not class `Bar`.
+Negative tokens (which begin with a minus sign: `-`) always use AND, so that `"-class:Foo -class:Bar"` will return results which are not class `Foo` AND not class `Bar`.
 
 ## Keyboard shortcuts
 
@@ -35,11 +35,14 @@ Search errors by these keyboard shortcuts outside of the search box:
 
 ## Search box
 
-Enter `key:value` tokens into the search box to refine results. Multiple tokens may be combined, and may also be combined with an optional full-text query: `john class:UserError -tag:wip -tag:pending component:UsersController action:update`.
+Enter `key:value` tokens into the search box to refine results. Multiple tokens may be combined, and may also be combined with an optional full-text query.
 
-Tokens are separated by spaces and are denoted by green highlighting, or yellow highlighting if the query does not match `key:value` token format. 
+Example query:
+`john class:UserError -tag:wip -tag:pending component:UsersController action:update`.
 
-The default search tokens are `-is:resolved -is:ignored`, which will show all errors that are not resolved or ignored. 
+Tokens are separated by spaces and are denoted by green highlighting. Text will be denoted with yellow highlighting if the query does not match `key:value` token format, like full text. 
+
+The search box is populated by default with `-is:resolved -is:ignored`, which will show all errors that are not resolved or ignored. 
 
 ![Image of default search box values](images/isresolved_isnotignored.png)
 
