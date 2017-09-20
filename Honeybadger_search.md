@@ -4,12 +4,17 @@ title: "Search"
 category: guide
 ---
 
-#Honeybadger Search Documentation
+# Honeybadger Search Documentation
 Honeybadger's search lets your team powerfully search errors to resolve quickly. You can search errors in one project or across all projects. 
 
-Searches can be done through the search box or keyboard shortcuts when the search box is unselected. Key:value tokens may be combined to refine results, and may also be combined with a full-text query. 
+Searches can be done through the search box or keyboard shortcuts when the search box is unselected. `Key:value` tokens may be combined to refine results, and may also be combined with a full-text query. 
 
 Key:value tokens can appear in the search box in any order. 
+
+## How combined tokens filter results
+Positive tokens use OR to match results. An example of a match is a  search for `class:Foo class:Bar `; the search results will include errors with class `Foo` OR `Bar`.
+
+Negative tokens (which begin with a minus sign: -) always use AND, so that `"-class:Foo -class:Bar"` will return results which are not class `Foo` AND not class `Bar`.
 
 ## Keyboard shortcuts
 
@@ -30,9 +35,9 @@ Search errors by these keyboard shortcuts outside of the search box:
 
 ## Search box
 
-Enter key:value tokens into the search box to refine results. Multiple tokens may be combined, and may also be combined with an optional full-text query: `john class:UserError -tag:wip -tag:pending component:UsersController action:update`.
+Enter `key:value` tokens into the search box to refine results. Multiple tokens may be combined, and may also be combined with an optional full-text query: `john class:UserError -tag:wip -tag:pending component:UsersController action:update`.
 
-Tokens are separated by spaces and are denoted by green highlighting, or yellow highlighting if the query does not match a preset key:value token. 
+Tokens are separated by spaces and are denoted by green highlighting, or yellow highlighting if the query does not match `key:value` token format. 
 
 The default search tokens are `-is:resolved -is:ignored`, which will show all errors that are not resolved or ignored. 
 
@@ -149,9 +154,12 @@ Search error details by class, tag, and message.
 
  Name       | Matches errors   | Example  |
 | ------------- |:-------------:| -----:|
-| Class | containing class name | `class:"PermissionDeniedError"`| 
-| Tag| containing tag name | `tag:"tag_example"` |
-| Message | containing message text | `message:"404"` |
+| class | With a certain class | `class:"PermissionDeniedError"`| 
+| -class| Without a certain class | `-:"PermissionDeniedError"`|
+| tag| With a certain tag name | `tag:"tag_example"` |
+| -tag| Without a certain tag name | `-tag:"tag_example"` |
+| message | With a message | `message:"404"` |
+| -message | Without message text | `-message:"404"` |
 
 Class, tag, and message can be combined for specific results. For example, the query: `message:"NameError" class:"TextOrganizer" tag:"priority"` searches errors containing "NameError" from the TextOrganizer class with a "priority" tag. 
 
@@ -160,19 +168,35 @@ Search errors by component, action, URL, and host.
 
  Name       | Matches errors   | Example  |
 | ------------- |:-------------:| -----:|
-| Control | in Control | `component:"UsersController"`| 
-| Action| in Action | `action:"new"`  |
-| URL | in URL | `request.url:"/docs"` |
-| Host | in Host | `request.host:"Example"` |
+| control | With a controller/component | `component:"UsersController"`| 
+| -control | Without a controller/component | `-component:"UsersController"`| 
+| action| With an action | `action:"update"`  |
+| -action| Without an action | `-action:"update"`  |
+| url | That happened at the specified URL| `request.url:"camera"` |
+| -url | That happened without specified URL| `-request.url:"camera"` |
+| host | On a server with this name | `request.host:"Example"` |
+| -host | Not on a server with this name | `request.host:"Example"` |
 
-component:"" request.host:"" request.url:"" action:"" 
-
-Locations can be combined for more specific results. For example, `component:"UsersController" action:"new" request.url:"/docs"` searches errors generated from the new action in the UsersController in the /docs.
+Locations can be combined for more specific results. For example, the query: `component:"UsersController" action:"update" request.url:"/docs"` searches errors generated from the update action in the UsersController in the /docs.
 
 ### Request
+Search for all errors created by certain users,  bob@example.com? You can do that and much more with our nested search syntax.
+
+For example, searching for context.user.email:bob@example.com would match the following hash that was sent in the context with an error:
+
+{ user: { email: "bob@example.com" } } 
+When searching these hashes, separate the nested levels of the hash with a period. For example params.user.first_name:bob.
+
+Searches against these three hashes use * as a wildcard, so a search for context.user.email:*@example.com would match any email address at example.com.
 
 
 ## Sorting
+
+## Negative searches
+
+Searches for context, params, session, request, and occurred fields can be negated by prepending a "-" to the field name. For example, if you wanted to exclude any errors that were triggered by Googlebot, you could do a negative search like this:
+
+`-request.user_agent:*Googlebot*`
 
 ## filtering
 
