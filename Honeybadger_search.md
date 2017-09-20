@@ -11,7 +11,8 @@ Searches can be done through the search box or keyboard shortcuts when the searc
 
 Key:value tokens can appear in the search box in any order. 
 
-##Keyboard shortcuts
+## Keyboard shortcuts
+
 Search errors by these keyboard shortcuts outside of the search box: 
 
 | Key      | Response  |
@@ -24,9 +25,11 @@ Search errors by these keyboard shortcuts outside of the search box:
 | T or t|	Show All Users' Errors|
 | J or j | Jump to another project | 
 | E or e | Show errors in all environments *| 
+
 **Use first character of environment name to filter by environment.*
 
-##Search box
+## Search box
+
 Enter key:value tokens into the search box to refine results. Multiple tokens may be combined, and may also be combined with an optional full-text query: `john class:UserError -tag:wip -tag:pending component:UsersController action:update`.
 
 Tokens are separated by spaces and are denoted by green highlighting, or yellow highlighting if the query does not match a preset key:value token. 
@@ -35,11 +38,13 @@ The default search tokens are `-is:resolved -is:ignored`, which will show all er
 
 ![Image of default search box values](images/isresolved_isnotignored.png)
 
-###Text search
+### Text search
+
 Search through your errors by **class** or error **message** by going to your project page and typing your search term into the search box. Text queries can also be combined with key:value tokens: 
 `john class:UserError -tag:wip -tag:pending component:UsersController action:update`.
 
-###Search box keyboard shortcuts
+### Search box keyboard shortcuts
+ 
  Key      | Response  |
 | ------------- |:-------------:| 
 | enter | submits form |
@@ -51,12 +56,16 @@ Search through your errors by **class** or error **message** by going to your pr
 | escape | closes hint| 
 | typing | triggers autocomplete |
 
-###Search palette 
+### Search palette 
+
 Use the search palette to refine your query. Query tokens are separated by spaces and are denoted by green highlighting, or yellow highlighting if the query is not a key:value token. 
 
 ![Image of search box and search palette](images/search_palette.png)
 
-###Resolved, ignored, paused
+### Resolved, ignored, paused
+
+Search errors that are resolved, ignored, paused, or unresolved, not ignored, or unpaused. 
+
 | Name       | Matches errors   | Example  |
 | ------------- |:-------------:| -----:|
 | Resolved | Resolved | `is:resolved`| 
@@ -71,7 +80,8 @@ Example:
 
 Generates errors that are paused, unresolved, and ignored. 
 
-###Assigned to
+### Assigned to
+
 Errors can be assigned to team members, and results can be refined by assignment. Tokens can be combined to search errors assigned to multiple team members. 
 
 | Name       | Matches errors   | Example  |
@@ -85,7 +95,8 @@ If other, choose a team member from the dropdown list or begin typing to trigger
 
 ![Animation of assigned to menu](images/assignee_options.gif).
 
-###Environment
+### Environment
+
 Search errors by your development environment:
 
 | Name       | Matches errors   | Example  |
@@ -100,7 +111,8 @@ If other, choose an environment from the dropdown list or begin typing to trigge
 
 ![Animation of assigned to menu](images/environment.gif).
 
-###Last Occurred
+### Last Occurred
+
 Search errors by their last occurrance. Last Occurred can also be combined with First Seen to create a date range. User's timezone is automatically determined but can be changed manually. 
 
 | Name       | Matches errors   | Example  |
@@ -117,7 +129,8 @@ You can also enter human-friendly dates like `today`, `this week`, or `July 1`, 
 ![Animation of last occurred query](images/last_occurred.gif)
 
 
-###First Seen
+### First Seen
+
 Search errors by when they were first seen. First Seen can also be combined with Last Occurred to create a date range. User's timezone is automatically determined but can be changed manually. 
 
 | Name       | Matches errors   | Example  |
@@ -126,12 +139,12 @@ Search errors by when they were first seen. First Seen can also be combined with
 | Last 7 Days| First seen in the last week | `created.after:"7 days ago"` |
 | Since Deploy* | First seen since last deploy | `created.after:"YYYY-MM-DD 19:19 UTC"` |
 | Other | Custom date | `created.after:"YYYY-MM-DD 0:00 UTC-7"` |
-*Since Deploy will not appear if deploy has not occurred.
 
+*Since Deploy will not appear if deploy has not occurred.
 
 You can also enter human-friendly dates like `today`, `this week`, or `July 1`, for example: `created.after:"September 12"`.
 
-###Error details
+### Error details
 Search error details by class, tag, and message. 
 
  Name       | Matches errors   | Example  |
@@ -142,7 +155,7 @@ Search error details by class, tag, and message.
 
 Class, tag, and message can be combined for specific results. For example, the query: `message:"NameError" class:"TextOrganizer" tag:"priority"` searches errors containing "NameError" from the TextOrganizer class with a "priority" tag. 
 
-###Location
+### Location
 Search errors by component, action, URL, and host.  
 
  Name       | Matches errors   | Example  |
@@ -156,13 +169,13 @@ component:"" request.host:"" request.url:"" action:"" 
 
 Locations can be combined for more specific results. For example, `component:"UsersController" action:"new" request.url:"/docs"` searches errors generated from the new action in the UsersController in the /docs.
 
-###Request
+### Request
 
 
-##Sorting
+## Sorting
 
-##filtering
+## filtering
 
-##batch resolving
+## batch resolving
 
 
