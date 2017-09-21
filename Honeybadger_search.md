@@ -7,9 +7,9 @@ category: guide
 # Honeybadger Search Documentation
 Honeybadger's search lets your team powerfully search errors to resolve quickly. You can search errors in one project or across all projects. 
 
-Searches can be done through the search box or keyboard shortcuts when the search box is unselected. `Key:value` tokens may be combined to refine results, and may also be combined with a full-text query. 
+Searches can be done through the search box or keyboard shortcuts when the search box is unselected. `key:value` tokens may be combined to refine results, and may also be combined with a full-text query. 
 
-`Key:value` tokens can appear in the search box in any order. 
+`yey:value` tokens can appear in the search box in any order. 
 
 ## How combined tokens filter results
 Positive tokens use OR to match results. An example of a match is a  search for `class:Foo class:Bar `; the search results will include errors with class `Foo` OR `Bar`.
@@ -48,7 +48,7 @@ The search box is populated by default with `-is:resolved -is:ignored`, which wi
 
 ### Text search
 
-Search through your errors by **class** or error **message** by going to your project page and typing your search term into the search box. Text queries can also be combined with key:value tokens: 
+Search through your errors by **class** or error **message** by going to your project page and typing your search term into the search box. Text queries can also be combined with `key:value` tokens: 
 `john class:UserError -tag:wip -tag:pending component:UsersController action:update`.
 
 ### Search box keyboard shortcuts
@@ -66,7 +66,7 @@ Search through your errors by **class** or error **message** by going to your pr
 
 ### Search palette 
 
-Use the search palette to refine your query. Query tokens are separated by spaces and are denoted by green highlighting, or yellow highlighting if the query is not a key:value token. 
+Use the search palette to refine your query. Query tokens are separated by spaces and are denoted by green highlighting, or yellow highlighting if the query is not a `key:value` token. 
 
 ![Image of search box and search palette](images/search_palette.png)
 
@@ -103,7 +103,7 @@ Errors can be assigned to team members, and results can be refined by assignment
 
 If other, choose a team member from the dropdown list or begin typing to trigger autocomplete.
 
-![Animation of assigned to menu](images/assignee_options.gif).
+![Animation of assigned to menu](images/assigned_to.gif).
 
 ### Environment
 
