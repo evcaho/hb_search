@@ -95,9 +95,11 @@ Errors can be assigned to team members, and results can be refined by assignment
 | Name       | Matches errors   | Example  |
 | ------------- |:-------------:| -----:|
 | Me | Assigned to you | `assignee:"me"`| 
+| Not me| Not assigned to me| `-assignee:"me"`|
 | Nobody | Unassigned | `assignee:"nobody"` |
 | Anybody | Assigned to anyone| `assignee:"anybody"` |
 | Other | Assigned to one team member |`assignee:""` |
+| Not other| Not assigned to one team member| `-assignee:""`|
 
 If other, choose a team member from the dropdown list or begin typing to trigger autocomplete.
 
@@ -183,17 +185,24 @@ Search errors by component, action, URL, and host.
 Locations can be combined for more specific results. For example, the query: `component:"UsersController" action:"update" request.url:"/docs"` searches errors generated from the update action in the UsersController in the /docs.
 
 ### Request
-Search for all errors created by certain users,  bob@example.com? You can do that and much more with our nested search syntax.
+Search for all errors with a matching value for a particular key in the context, params, user agent, or session hashes. 
+
+ Name       | Matches errors   | Example  |
+| ------------- |:-------------:| -----:|
+| Context | in { user: { email: "bob@example.com" }  | `context.user.email:"bob@example.io"`| 
+| -Context| Not coming from the `user.name` context "Bob" | `-context.user.name:"Bob"`|
+| Params | Coming from "Bob" in the `params.user.first_name` params | `params.user.first_name:"Bob"`|
+|-Params | Not coming from the `params.old:"useless"` params | `params.old:"useless"`|
+
+Requests can be combined or nested for more specific results. 
 
 For example, searching for context.user.email:bob@example.com would match the following hash that was sent in the context with an error:
 
-{ user: { email: "bob@example.com" } } 
-When searching these hashes, separate the nested levels of the hash with a period. For example params.user.first_name:bob.
+`{ user: { email: "bob@example.com" } } `
 
-Searches against these three hashes use * as a wildcard, so a search for context.user.email:*@example.com would match any email address at example.com.
+When searching these hashes, separate the nested levels of the hash with a period. For example `params.user.first_name:bob`.
 
-
-## Sorting
+Searches against context, param, user agent, or session hashes use * as a wildcard, so a search for `context.user.email:*@example.com` would match any email address at example.com.
 
 ## Negative searches
 
@@ -201,8 +210,34 @@ Searches for context, params, session, request, and occurred fields can be negat
 
 `-request.user_agent:*Googlebot*`
 
-## filtering
+## Sorting results
+Error results  can be sorted by date or error count.
 
-## batch resolving
+### Sort by date
+Sorting by "Last seen" lets you quickly jump to the newest or oldest exceptions that match your search result.
+
+1. Go to your project's error list page
+2. Click on the table header labeled "last seen"
+3. Click on it again to reverse the sort order 
+
+![Image of sort by date button](images/toggle_sort_order.png) 
+
+### Sort by count
+Sorting by "Times" lets you see which errors have happened the most or the fewest times.
+
+1. Go to your project's error index
+2. Click on the table header labeled "times"
+3. Click on it again to reverse the sort order
+
+![Image of sort by count button](images/toggle_count_order.png)
+
+
+## Update all
+Errors can be grouped and batch resolved or unresolved. 
+
+1. Use the search to select which errors you'd like to bulk resolve.
+2. Click on "Update All" and choose an option from the dropdown.
+
+![Image of update all dropdown](images/Update_all.png)
 
 
