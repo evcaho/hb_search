@@ -5,54 +5,46 @@ category: guide
 ---
 
 # Honeybadger Search Documentation
-Honeybadger's search lets your team powerfully search errors to resolve quickly. You can search errors in one project or across all projects. 
+Honeybadger lets you search errors in one project or across all projects using the search builder. `key:value` tokens may be combined to refine results, and may also be combined with a free-form text query. 
 
-Searches can be done through the search box or keyboard shortcuts when the search box is unselected. `key:value` tokens may be combined to refine results, and may also be combined with a full-text query. 
-
-`yey:value` tokens can appear in the search box in any order. 
+`key:value` tokens can appear in the search box in any order. 
 
 ## How combined tokens filter results
-Positive tokens use OR to match results. An example of a match is a  search for `class:Foo class:Bar `; the search results will include errors with class `Foo` OR `Bar`.
+Positive tokens use AND to match results unless the same field is used multiple times. For example, a search for `class:"Foo" class:"Bar" ` will include errors with class `Foo` OR `Bar`.
 
-Negative tokens (which begin with a minus sign: `-`) always use AND, so that `"-class:Foo -class:Bar"` will return results which are not class `Foo` AND not class `Bar`.
+Searches can be negated by prepending "-" to any field name. Negative tokens (which begin with a minus sign: `-`) **always** use AND, so that `"-class:Foo -class:Bar"` will return results which are not class `Foo` AND not class `Bar`.
 
-## Keyboard shortcuts
-
-Search errors by these keyboard shortcuts outside of the search box: 
-
-| Key      | Response  |
+Example query     | Searches  |
 | ------------- |:-------------:| 
-| / | Focus search box | 
-| A or a | Show resolved And Unresolved Errors| 
-| U or u | Show Unresolved Errors|
-| R or r | Show Resolved Errors| 
-| M or m	| Show Errors Assigned to Me|
-| T or t|	Show All Users' Errors|
-| J or j | Jump to another project | 
-| E or e | Show errors in all environments *| 
+|  `class:"Foo" is:resolved` | Resolved errors with class `Foo`| 
+| `-class:"Foo" is:resolved` | Resolved errors without class `Foo` | 
+| `-class:"Foo" -is:resolved` | Unresolved errors with class `Foo`| 
+| `class:"Foo" class:"Bar" is:resolved` | Resolved errors with class `Foo` OR class `Bar`| 
+| `-class:"Foo" -class:"Bar" is:resolved` | Resolved errors without class `Foo` AND class `Bar` |
 
-**Use first character of environment name to filter by environment.*
+## Ways to search
 
-## Search box
+Use the search builder to create a query. A query can include many `key:value` tokens for refined results or none. Query tokens are separated by spaces and are denoted by green highlighting, or yellow highlighting if the query is not a `key:value` token. 
 
-Enter `key:value` tokens into the search box to refine results. Multiple tokens may be combined, and may also be combined with an optional full-text query.
+![Image of search box and search palette](images/search_palette.png)
+
+## Search builder
+
+Enter `key:value` tokens into the search box to refine results. Multiple tokens may be combined, and may also be combined with a free form text query. 
 
 Example query:
 `john class:UserError -tag:wip -tag:pending component:UsersController action:update`.
 
-Tokens are separated by spaces and are denoted by green highlighting. Text will be denoted with yellow highlighting if the query does not match `key:value` token format, like full text. 
+Tokens are separated by spaces and are denoted by green highlighting. Highlighting will be yellow if the query doesn't match `key:value` token format, like [free-form text](## Free-form text search).  
 
 The search box is populated by default with `-is:resolved -is:ignored`, which will show all errors that are not resolved or ignored. 
 
 ![Image of default search box values](images/isresolved_isnotignored.png)
 
-### Text search
+## Search by keyboard shortcuts 
 
-Search through your errors by **class** or error **message** by going to your project page and typing your search term into the search box. Text queries can also be combined with `key:value` tokens: 
-`john class:UserError -tag:wip -tag:pending component:UsersController action:update`.
+Use the following keyboard shortcuts in the search box to write or refine your query. 
 
-### Search box keyboard shortcuts
- 
  Key      | Response  |
 | ------------- |:-------------:| 
 | enter | submits form |
@@ -64,98 +56,98 @@ Search through your errors by **class** or error **message** by going to your pr
 | escape | closes hint| 
 | typing | triggers autocomplete |
 
-### Search palette 
 
-Use the search palette to refine your query. Query tokens are separated by spaces and are denoted by green highlighting, or yellow highlighting if the query is not a `key:value` token. 
-
-![Image of search box and search palette](images/search_palette.png)
-
-### Resolved, ignored, paused
+## Search by resolved, ignored, or paused
 
 Search errors that are resolved, ignored, paused, or unresolved, not ignored, or unpaused. 
 
 | Name       | Matches errors   | Example  |
 | ------------- |:-------------:| -----:|
-| Resolved | Resolved | `is:resolved`| 
-| Not resolved | Unresolved | `-is:resolved` |
-| Paused | Paused| `is:paused` |
-| Not paused | Unpaused  |`-is:paused` |
-| Ignored| Ignored  |`is:ignored` |
-| Not ignored | Not ignored  |`-is:ignored` |
+| resolved | Resolved | `is:resolved`| 
+| -resolved | Unresolved | `-is:resolved` |
+| paused | Paused| `is:paused` |
+| -paused | Unpaused  |`-is:paused` |
+| ignored| Ignored  |`is:ignored` |
+| -ignored | Not ignored  |`-is:ignored` |
 
 Example: 
 ![Image of resolved, ignored, and paused requests](images/resolved_ignored_paused.png).
 
 Generates errors that are paused, unresolved, and ignored. 
 
-### Assigned to
+## Search by assignee
 
 Errors can be assigned to team members, and results can be refined by assignment. Tokens can be combined to search errors assigned to multiple team members. 
 
 | Name       | Matches errors   | Example  |
 | ------------- |:-------------:| -----:|
-| Me | Assigned to you | `assignee:"me"`| 
-| Not me| Not assigned to me| `-assignee:"me"`|
-| Nobody | Unassigned | `assignee:"nobody"` |
-| Anybody | Assigned to anyone| `assignee:"anybody"` |
-| Other | Assigned to one team member |`assignee:""` |
-| Not other| Not assigned to one team member| `-assignee:""`|
+| me | Assigned to me | `assignee:"me"`| 
+| -me| Not assigned to me| `-assignee:"me"`|
+| nobody | Unassigned | `assignee:"nobody"` |
+| anybody | Assigned to anyone| `assignee:"anybody"` |
+| other | Assigned to one team member |`assignee:""` |
+| -other| Not assigned to one team member| `-assignee:""`|
 
 If other, choose a team member from the dropdown list or begin typing to trigger autocomplete.
 
 ![Animation of assigned to menu](images/assigned_to.gif).
 
-### Environment
+## Search by environment
 
-Search errors by your development environment:
+Search errors by your environment:
 
 | Name       | Matches errors   | Example  |
 | ------------- |:-------------:| -----:|
-| Production | In production | `environment:"production"`| 
-| Not production | Not in production | `-environment:"production"`|
-| Development| In development | `environment:"development"` |
-| Except development| Not in development | `-environment:"development"` |
-| Other | In another environment | `environment:"test"` |
+| production | In production | `environment:"production"`| 
+| not production | Not in production | `-environment:"production"`|
+| development| In development | `environment:"development"` |
+| except development| Not in development | `-environment:"development"` |
+| other | In another environment | `environment:"test"` |
 
 If other, choose an environment from the dropdown list or begin typing to trigger autocomplete.
 
 ![Animation of assigned to menu](images/environment.gif).
 
-### Last Occurred
+## Search by last occurred
 
-Search errors by their last occurrance. Last Occurred can also be combined with First Seen to create a date range. User's timezone is automatically determined but can be changed manually. 
+Search errors by their last occurrance. A last occured query and a negative (-) last occurred token can be combined to create a date range. Your timezone is automatically determined but can be changed manually.  
 
 | Name       | Matches errors   | Example  |
 | ------------- |:-------------:| -----:|
-| Last 24 Hours | From the last 24 hours | `occurred.after:"24 hours ago"`|
-| Last 7 Days| From the last 7 days | `occurred.after:"7 days ago"` |
-| Since Deploy* | Since last deploy | `occurred.after:"YYYY-MM-DD 19:19 UTC"` |
-| Other | Custom date | `occurred.after:"YYYY-MM-DD 0:00 UTC-7"` |
+| last 24 hours | From the last 24 hours | `occurred.after:"24 hours ago"`|
+| -last 24 hours | Before the last 24 hours | `occurred.before:"24 hours ago"`|
+| last 7 days| From the last 7 days | `occurred.after:"7 days ago"` |
+| -last 7 days| Before the last 7 days | `occurred.before:"7 days ago"` |
+| since deploy* | Since last deploy | `occurred.after:"YYYY-MM-DD 19:19 UTC"` |
+| -since deploy | Before last deploy | `occurred.after:"YYYY-MM-DD 19:19 UTC"` |
+| other | Custom date | `occurred.after:"YYYY-MM-DD 0:00 UTC-7"` |
 
-*Since Deploy will not appear if deploy has not occurred.
+*If deploy hasn't happened, Since Deploy won't autopopulate with a date.
 
 You can also enter human-friendly dates like `today`, `this week`, or `July 1`, for example: `occurred.after:"this week"`. 
 
 ![Animation of last occurred query](images/last_occurred.gif)
 
 
-### First Seen
+## Search by first seen
 
-Search errors by when they were first seen. First Seen can also be combined with Last Occurred to create a date range. User's timezone is automatically determined but can be changed manually. 
+Search errors by when they were first seen. A first seen query and a negative (-) first seen query can be combined to create a date range. Your timezone is automatically determined but can be changed manually.  
 
 | Name       | Matches errors   | Example  |
 | ------------- |:-------------:| -----:|
-| Last 24 Hours | First seen in the last 24 hours | `created.after:"24 hours ago"`| 
-| Last 7 Days| First seen in the last week | `created.after:"7 days ago"` |
-| Since Deploy* | First seen since last deploy | `created.after:"YYYY-MM-DD 19:19 UTC"` |
-| Other | Custom date | `created.after:"YYYY-MM-DD 0:00 UTC-7"` |
+| last 24 Hours | First seen in the last 24 hours | `created.after:"24 hours ago"`| 
+| -last 24 hours | First seen before 24 hours ago | `created.before:"24 hours ago"`|
+| last 7 days| First seen in the last week | `created.after:"7 days ago"` |
+| last 7 days| First seen in the last week | `created.before:"7 days ago"` |
+| since deploy* | First seen since last deploy | `created.after:"YYYY-MM-DD 19:19 UTC"` |
+| other | Custom date | `created.after:"YYYY-MM-DD 0:00 UTC-7"` |
 
 *Since Deploy will not appear if deploy has not occurred.
 
 You can also enter human-friendly dates like `today`, `this week`, or `July 1`, for example: `created.after:"September 12"`.
 
-### Error details
-Search error details by class, tag, and message. 
+## Search by error details
+Search error by class, tag, and message. 
 
  Name       | Matches errors   | Example  |
 | ------------- |:-------------:| -----:|
@@ -168,7 +160,7 @@ Search error details by class, tag, and message.
 
 Class, tag, and message can be combined for specific results. For example, the query: `message:"NameError" class:"TextOrganizer" tag:"priority"` searches errors containing "NameError" from the TextOrganizer class with a "priority" tag. 
 
-### Location
+## Search by location
 Search errors by component, action, URL, and host.  
 
  Name       | Matches errors   | Example  |
@@ -182,33 +174,27 @@ Search errors by component, action, URL, and host.
 | host | On a server with this name | `request.host:"Example"` |
 | -host | Not on a server with this name | `request.host:"Example"` |
 
-Locations can be combined for more specific results. For example, the query: `component:"UsersController" action:"update" request.url:"/docs"` searches errors generated from the update action in the UsersController in the /docs.
+Locations can be combined for more specific results. For example, the query: `component:"UsersController" action:"update" request.url:"/docs"` searches errors generated from the update action in the UsersController in the URL `camera`.
 
-### Request
-Search for all errors with a matching value for a particular key in the context, params, user agent, or session hashes. 
+## Search by request
+Search errors by context, params, user agent, or session hashes. 
 
  Name       | Matches errors   | Example  |
 | ------------- |:-------------:| -----:|
-| Context | in { user: { email: "bob@example.com" }  | `context.user.email:"bob@example.io"`| 
-| -Context| Not coming from the `user.name` context "Bob" | `-context.user.name:"Bob"`|
-| Params | Coming from "Bob" in the `params.user.first_name` params | `params.user.first_name:"Bob"`|
-|-Params | Not coming from the `params.old:"useless"` params | `params.old:"useless"`|
+| context | Within a context  | `context.user.email:"bob@example.io"`| 
+| -context| Without a context | `-context.user.name:"Bob"`|
+| params | Within a parameter | `params.user.first_name:"Bob"`|
+|-params | Without a parameter | `params.old:"useless"`|
+|user agent | triggered by a user agent | `request.user_agent:"Googlebot`|
+|-user agent | not triggered by a user agent | `-request.user_agent:"Googlebot`|
 
-Requests can be combined or nested for more specific results. 
-
-For example, searching for context.user.email:bob@example.com would match the following hash that was sent in the context with an error:
+Requests can be combined or nested for more specific results.  For example, searching for context.user.email:bob@example.com would match the following hash that was sent in the context with an error:
 
 `{ user: { email: "bob@example.com" } } `
 
 When searching these hashes, separate the nested levels of the hash with a period. For example `params.user.first_name:bob`.
 
 Searches against context, param, user agent, or session hashes use * as a wildcard, so a search for `context.user.email:*@example.com` would match any email address at example.com.
-
-## Negative searches
-
-Searches for context, params, session, request, and occurred fields can be negated by prepending a "-" to the field name. For example, if you wanted to exclude any errors that were triggered by Googlebot, you could do a negative search like this:
-
-`-request.user_agent:*Googlebot*`
 
 ## Sorting results
 Error results  can be sorted by date or error count.
@@ -240,4 +226,24 @@ Errors can be grouped and batch resolved or unresolved.
 
 ![Image of update all dropdown](images/Update_all.png)
 
+## Free-form text search
 
+Search through your errors by **class** or error **message** by typing your search term into the search box. Free-form text queries can also be combined with `key:value` tokens, for example: 
+`john class:UserError component:UsersController action:update`.
+
+## Keyboard shortcuts
+
+Quickly search errors using these keyboard shortcuts: 
+
+| Key      | Response  |
+| ------------- |:-------------:| 
+| / | Focus search box | 
+| A or a | Show resolved And Unresolved Errors| 
+| U or u | Show Unresolved Errors|
+| R or r | Show Resolved Errors| 
+| M or m	| Show Errors Assigned to Me|
+| T or t|	Show All Users' Errors|
+| J or j | Jump to another project | 
+| E or e | Show errors in all environments *| 
+
+**Use first character of environment name to filter by environment.*
